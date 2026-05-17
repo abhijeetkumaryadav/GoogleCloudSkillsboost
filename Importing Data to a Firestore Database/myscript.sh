@@ -1,22 +1,18 @@
 #!/bin/bash
 
-# Get the Project ID automatically
+# Get Project ID
 export PROJECT_ID=$(gcloud config get-value project)
 
-# Enable Firestore API
-gcloud services enable datastore.googleapis.com
+# Enable Firestore
+gcloud services enable datastore.googleapis.com --project=$PROJECT_ID
 
-# Clone the lab repository
-git clone https://github.com/robmorgan/firestore-import-export.git
-cd firestore-import-export
+# Direct Download (This fixes the GitHub Username error)
+wget https://raw.githubusercontent.com/robmorgan/firestore-import-export/master/import.js
+wget https://raw.githubusercontent.com/robmorgan/firestore-import-export/master/package.json
 
-# Install dependencies
+# Install and Run
 npm install
-
-# Download the data file for the lab
 gsutil cp gs://cloud-training/pureskill/firestore/customers.json .
-
-# Run the import script
 node import.js customers.json
 
-echo "Lab setup complete! Check your Firestore database now."
+echo "DONE! Go check your progress on the lab page."
